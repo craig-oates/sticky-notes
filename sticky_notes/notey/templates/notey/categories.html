@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Sticky Notes: {{ page_title }}{% endblock %}
+{% block content %}
+<section class="category-dashboard">
+    <div class="dash-bar">
+        <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+        <form method="post"
+              action="{% url 'category_create' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add</button>
+        </form>
+    </div>
+    <p class="secondary-info"><em>Do not include '#' in the hex-value.</em></p>
+    <p>
+        For a list of Post-It style colour pallets, head to
+        <a href="https://www.color-hex.com/color-palette/83841"d
+           title="Link to color-hex.com for various Post-It note themes colour pallets.">
+            color-hex.com
+        </a>
+        .
+    </p>
+    <table class="category-table">
+        <tr>
+            <th>Colour</th>
+            <th>Name</th>
+            <th>Hex</th>
+            <th>Delete</th>
+        </tr>
+        {% for category in categories %}
+        <tr>
+            <td>
+                <div style="background: #{{ category.hex_value }};
+                            width: 100%;
+                            height: 52px;">
+                </div>
+            </td>
+            <td>{{ category.name }}</td>
+            <td class="mono-font">#{{ category.hex_value }}</td>
+            <td>
+                <form method="post"
+                      action="{% url 'category_delete' pk=category.pk %}">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+</section>
+{% endblock %}

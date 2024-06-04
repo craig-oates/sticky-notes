@@ -1,0 +1,585 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body,
+button[type=submit] {
+    font-family: "Outfit", sans-serif;
+}
+
+header {
+    color: black;
+    background: lightsteelblue;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    padding: 8px;
+    width: 100%;
+    z-index: 1;
+}
+
+header h1,
+header nav {
+    display: inline-block;
+    padding: 0px;
+    margin: 0px;
+}
+
+header h1 a {
+    text-decoration: none;
+    color: black;
+}
+
+header h1 a:visited {
+    color: black;
+}
+
+header h1 a:hover {
+    color: whitesmoke;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+    padding: 0px 8px;
+}
+
+header nav a,
+.logout-page a,
+.home-page div a,
+.home-page-login a {
+    text-decoration: none;
+    background: #0e6286;
+    color: white;
+    border-radius: 4px;
+    padding: 10px 0px 10px 0px;
+    text-align: center;
+    margin-right: 8px;
+}
+
+header nav a,
+.home-page div div a {
+    width: 88px;
+}
+
+.logout-page a {
+    display: inline-block;
+    width:  120px;
+}
+
+header nav a:hover,
+.logout-page a:hover,
+.home-page div a:hover,
+.home-page-login a:hover {
+    background: #59b7e1;
+    color: black;
+}
+
+header nav .logout {
+    width: 44px;
+    background: #fc79aa;
+    color: white;
+}
+
+header nav .logout:hover {
+    width: 44px;
+    background: #fe7573;
+    color: white;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    overflow: hidden;
+    background: midnightblue;
+    padding-bottom: 8px;
+}
+
+footer p {
+    margin: 0px;
+    font-size: 12px;
+    padding: 0px 0px 0px 8px;
+    color: white;
+}
+
+footer div {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 8px;
+}
+
+footer div a {
+    background: #0a66c2;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 4px;
+    width: 66px;
+    text-align: center;
+    margin: 0px 4px 0px 0px;
+}
+
+footer div a:hover {
+    background: #3f51b5;
+}
+
+main {
+    margin: 0px;
+    position: relative;
+    top: 56px;
+}
+
+.home-page {
+    text-align: center;
+    margin: 88px 0px 180px 0px;
+}
+
+.home-page h2 {
+    margin: 82px;
+    font-size: 40px;
+}
+
+.home-page div {
+    width: 100%;
+    height: 600px;
+    background: #292828;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+    max-height: 1200px;
+    background-image: url("../images/dashboard-screenshot.png");
+    background-size: cover;
+    background-blend-mode: overlay;
+    color: white;
+}
+
+.home-page-login {
+    padding: 20px;
+}
+
+.home-page-login a {
+    width: 88px;
+    display: inline-block;
+}
+
+.home-page div h2,
+.home-page div h3 {
+    padding: 0px;
+    margin: 20px;
+}
+
+.home-page div h2{
+    font-size: 44px;
+}
+
+.home-page img {
+    max-width: 800px;
+    width: 100%;
+    box-shadow: 0px 0 20px 0px #908e8e;
+
+}
+
+.note-dashboard,
+.category-dashboard {
+    padding-bottom: 88px;
+}
+
+.note-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    margin: auto;
+}
+
+.note {
+    background: #fff69b;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 288px !important;
+    height: 288px !important;
+    margin: 12px;
+    padding: 8px;
+}
+
+.note-detail-link {
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: monospace;
+}
+
+.note-controls {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}
+
+.note-detail-link {
+    color: black;
+    border-bottom: 1px solid black;
+}
+
+.note-detail-link:hover {
+    color: darkcyan;
+}
+
+.note-content {
+    font-size: 34px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0px;
+    padding: 0px;
+}
+
+.note-controls a,
+.note-controls button {
+    border-radius: 4px;
+}
+
+.note-controls button {
+    border: 2px solid red;
+    color: red;
+    background: none;
+    font-family: "Outfit", sans-serif;
+    width: 44px;
+    height: 44px;
+    font-size: 16px;
+}
+
+.note-controls button:hover {
+    border: 2px solid darkred;
+    color: darkred;
+}
+
+.note-controls a {
+    border: 2px solid slateblue;
+    color: slateblue;
+    text-decoration: none;
+    text-align: center;
+    padding: 10px 6px;
+}
+
+.note-controls a:hover {
+    border: 2px solid lightskyblue;
+    color: lightskyblue;
+}
+
+.new-note {
+    background: rgb(180,58,168);
+    background: linear-gradient(164deg,
+                                rgba(180,58,168,1) 0%,
+                                rgba(208,29,253,1) 41%,
+                                rgba(69,186,252,1) 100%);
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    border-radius:12px;
+    padding: 12px;
+    position: fixed;
+    float: right;
+    right: 22px;
+    bottom: 48px;
+    z-index: 1;
+}
+
+.new-note:hover {
+    background: rgb(69,186,252);
+    background: linear-gradient(43deg,
+                                rgba(69,186,252,1) 0%,
+                                rgba(208,29,253,1) 41%,
+                                rgba(103,14,95,1) 100%);
+}
+
+.messages {
+    /* margin-top: 80px; */
+    position: relative;
+    top: 60px;
+    z-index: 3;
+    margin: 0px;
+    padding: 0px;
+}
+
+.messages p,
+.errorlist li {
+    margin: 4px 0px;
+    padding: 12px;
+}
+
+.error,
+.errorlist li {
+    color: white;
+    background: palevioletred;
+}
+
+.errorlist {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.info {
+    background: paleturquoise;
+    color: black;
+}
+
+.success {
+    background: palegreen;
+    color: black;
+}
+
+.dash-bar div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    align-items: center;
+}
+
+.dash-bar form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 880px;
+    width: 100%;
+}
+
+.dash-bar form p {
+    display: inline-block;
+    width: min-content;
+    margin: 4px;
+}
+
+.dash-bar form label {
+    display: block;
+}
+
+.dash-bar form input[type=text] {
+    padding: 12px;
+    font-family: "Outfit", sans-serif;
+    font-size: 16px;
+}
+
+.dash-bar form button[type=submit] {
+    margin-top: 18px;
+}
+
+.dash-bar div a,
+.dash-bar form button {
+    text-decoration: none;
+    background: #10ced9;
+    color: black;
+    padding: 12px;
+    border-radius: 4px;
+}
+
+.dash-bar div a:hover,
+.dash-bar form button:hover,
+.note-detail-controls a:hover {
+    background: #118990;
+    color: white;
+}
+
+.dash-bar div a:nth-child(1),
+.category-table form button,
+.note-detail-controls form button {
+    background: #c91818;
+    color: white;
+    font-size: 16px;
+}
+
+.dash-bar div a:nth-child(1):hover,
+.category-table form button:hover,
+.note-detail-controls form button:hover {
+    background: #7e1313;
+    color: white;
+}
+
+.dash-bar form button,
+.category-table form button,
+.note-detail-controls form button {
+    border: none;
+    height: 44px;
+}
+
+.category-table form button,
+.note-detail-controls form button {
+    border-radius: 4px;
+    margin: 4px 0px;
+}
+
+.secondary-info {
+    color: silver;
+    padding: 0px;
+    margin: 0px;
+}
+
+.category-table {
+    text-align: center;
+    max-width: 880px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.category-table th {
+    padding: 12px 0px;
+    border-bottom: 1px solid silver;
+    background: #f4f5f6;
+}
+
+.category-table td {
+    padding: 0px;
+}
+
+.category-table tr {
+    border-bottom: 1px solid silver;
+}
+
+.mono-font {
+    font-family: monospace;
+}
+
+.note-detail-header {
+    margin-bottom: 0px;
+}
+
+.timestamp {
+    font-size: 12px;
+    margin: 0px;
+    color: silver;
+}
+
+.note-detail-controls {
+    margin: 8px 0px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.note-detail-controls form button {
+    border-radius: 4px;
+    margin: 0px 5px 0px 0px;
+}
+
+
+.note-detail-controls a {
+    text-decoration: none;
+    background: #10ced9;
+    color: black;
+    margin: 0px 4px 0px 0px;
+    border-radius: 4px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    max-width: 88px;
+    width: 100%;
+    justify-content: center;
+}
+
+.note-detail-content {
+    max-width: 880px;
+    width: 100%;
+    white-space: pre-line;
+}
+
+.note-form {
+    max-width: 880px;
+    width: 100%;
+    padding-bottom: 140px;
+}
+
+.note-form input[type=text],
+.note-form select,
+.note-form textarea {
+    font-family: "Outfit", sans-serif;
+    padding: 12px;
+    font-size: 16px;
+}
+
+.note-form p {
+    display: flex;
+    flex-direction: column;
+}
+
+.note-form button {
+    background: #ff983c;
+    color: black;
+    font-size: 16px;
+    border: none;
+    height: 44px;
+    width: 88px;
+    border-radius: 4px;
+    float: right;
+}
+
+.note-form button:hover {
+    background: blueviolet;
+    color: white;
+}
+
+.login-page {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 88px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 88px;
+}
+
+.login-page h2 {
+    font-size: 49px;
+}
+
+.login-form label {
+    display: block;
+}
+
+.login-form span {
+    display: block;
+    color: silver;
+}
+
+.login-form input[type=text],
+.login-form input[type=password],
+.login-form input[type=email] {
+    padding: 12px;
+    font-size: 16px;
+    font-family: "Outfit", sans-serif;
+}
+
+.login-form button {
+    font-family: "Outfit", sans-serif;
+    font-size: 16px;
+    width: 88px;
+    text-decoration: none;
+    background: #0e6286;
+    color: white;
+    border-radius: 4px;
+    padding: 10px 0px 10px 0px;
+    text-align: center;
+    margin-right: 8px;
+    border: none;
+}
+
+.login-form button:hover {
+    background: #59b7e1;
+    color: black;
+}

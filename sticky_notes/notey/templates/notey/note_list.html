@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Sticky Notes: {{ page_title }}{% endblock %}
+{% block content %}
+<section class="note-dashboard">
+    <div class="dash-bar">
+        <h2>{{ user }}</h2>
+        <div>
+            <a href="{% url 'user_delete' %}"
+               title="Click to delete your account.">
+                Delete Account
+            </a>
+            {% if request.user.is_superuser %}
+            <a href="{% url 'category_list' %}"
+               title="Click to see categories.">
+                Categories
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="note-container">
+        {% for note in notes %}
+        <div class="note"
+             style="background: #{{ note.category.hex_value }};">
+            <a class="note-detail-link"
+               href="{% url 'note_detail' pk=note.pk %}">
+                {{ note.title }}
+            </a>
+            <p class="note-content">
+                {{ note.content }}
+            </p>
+            <div class="note-controls">
+                <form method="POST"
+                      action="{% url 'note_delete' pk=note.pk %}">
+                    {% csrf_token %}
+                    <button type="submit">Del.</button>
+                </form>
+                <a href="{% url 'note_update' pk=note.pk %}">Edit</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <a class="new-note"
+       href="{% url 'note_create' %}"
+       title="Click to create a new note.">
+        + New Note
+    </a>
+</section>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Sticky Notes - {% if form.instance.pk %}Edit{% else%}Create{% endif %} Note{% endblock %}
+{% block content %}
+{% if form.instance.pk %}
+<h2>Edit Note</h2>
+<div class="note-detail-controls">
+    <form method="POST"
+          action="{% url 'note_delete' pk=note_id %}">
+        {% csrf_token %}
+        <button class="delete-button"
+                type="submit">Delete</button>
+    </form>
+    <a href="{% url 'note_detail' pk=note_id %}"
+       title="Click to view the detailed view of this note.">
+        View Note
+    </a>
+</div>
+{% else %}
+<h2>Create Note</h2>
+{% endif %}
+<form class="note-form"
+      method="post"
+      action="{% if form.instance.pk %}
+              {% url 'note_update' pk=form.instance.pk %}
+              {% else %}
+              {% url 'note_create' %}
+              {% endif %}">
+    {% csrf_token %}
+    <p>
+        <label>Title</label>
+        {{ form.title }}
+    </p>
+    <p>
+        <label>Colour</label>
+        <select name="category">
+            {% for item in form.fields.category.queryset %}
+            <option value="{{item.id}}">{{ item.name }}</option>
+            {% endfor %}
+        </select>
+    </p>
+    <p>
+        <label>Content</label>
+        {{ form.content }}
+    </p>
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,
+                    initial-scale=1.0">
+        <title>{% block title %}Sticky Notes{% endblock %}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
+              rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'notey/css/main.css' %}">
+    </head>
+    <body>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <header>
+            <h1>{% block header %}<a href="{% url 'index' %}">Sticky Notes</a>{% endblock %}</h1>
+            <nav>
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'note_list' %}"
+                   title="Click to go the dashboard.">
+                    Dashboard
+                </a>
+                <a class="logout"
+                   href="{% url 'logout' %}"
+                   title="Click to go the logout.">
+                    Exit
+                </a>
+                {% else %}
+                <a href="{% url 'login' %}"
+                   title="Click to login.">
+                    Login
+                </a>
+                <a href="{% url 'register' %}"
+                   title="Click to signup to the website.">
+                  Signup
+                </a>
+                {% endif %}
+            </nav>
+        </header>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        <footer>
+            <div>
+                <a href="https://www.linkedin.com/in/craig-oates-8710b02b4/"
+                   title="Click to view my LinkedIn Profile.">
+                    LinkedIn
+                </a>
+                <a href="https://github.com/craig-oates/"
+                   title="Click to view my GitHub profile.">
+                    GitHub
+                </a>
+            </div>
+            <p>Copyright (C) 2024 by Craig Oates</p>
+        </footer>
+    </body>
+</html>

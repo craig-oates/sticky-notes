@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Sticky Notes: {{ page_title }}{% endblock %}
+{% block content %}
+{% load static %}
+<div class="home-page">
+    <div>
+        <h2>Need to make a note?</h2>
+        <h3>You're in the right place.</h3>
+        <section class="home-page-login">
+            <a href="{% url 'login' %}"
+               title="Click to login.">
+                Login
+            </a>
+            <a href="{% url 'register' %}"
+               title="Click to signup to the website.">
+                Signup
+            </a>
+        </section>
+    </div>
+    <h2>Create sticky-notes, quickly and easily.</h2>
+    <img src="{% static 'notey/images/collage.png' %}"
+         alt="collage">
+    <h2>
+        Build a list of categories, to make the stick-note pallete scheme of
+        your choice.
+    </h2>
+    <img src="{% static 'notey/images/categories-screenshot.png' %}"
+         alt="categories screenshot">
+    <h2>
+        Your notes are displayed in a clean and minimal design, helping you
+        focus on your notes.
+    </h2>
+    <img src="{% static 'notey/images/dashboard-screenshot.png' %}"
+         alt="dashboard screenshot">
+    <section class="home-page-login">
+        <a href="{% url 'login' %}"
+           title="Click to login.">
+            Login
+        </a>
+        <a href="{% url 'register' %}"
+           title="Click to signup to the website.">
+            Signup
+        </a>
+    </section>
+</div>
+{% endblock %}

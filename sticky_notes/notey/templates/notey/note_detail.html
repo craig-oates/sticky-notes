@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Sticky Notes - {{ note.title }}{% endblock %}
+{% block content %}
+<h2 class="note-detail-header">{{ note.title }}</h2>
+<p class="timestamp">Created at: {{ note.created_at }}</p>
+<div class="note-detail-controls">
+    <form method="POST"
+          action="{% url 'note_delete' pk=note.pk %}">
+        {% csrf_token %}
+        <button class="delete-button"
+                type="submit">Delete</button>
+    </form>
+    <a href="{% url 'note_update' pk=note.pk %}">Edit</a>
+    {% if request.user.is_superuser %}
+    <a href="{% url 'category_list' %}"
+       title="Click to see categories.">
+        Categories
+    </a>
+    {% endif %}
+</div>
+<div class="note-detail-content">
+    <p>{{ note.content }}</p>
+</div>
+{% endblock %}

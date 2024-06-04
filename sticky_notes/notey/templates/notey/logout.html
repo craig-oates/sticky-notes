@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="logout-page">
+    <h2>Logout</h2>
+    <p>You can close this window.</p>
+    <a href="{% url 'login' %}"
+       title="Click to return to the login page.">
+        Login Again
+    </a>
+    <a href="{% url 'index' %}"
+       title="Click to return to the home page.">
+        Return to Home
+    </a>
+</div>
+{% endblock %}
