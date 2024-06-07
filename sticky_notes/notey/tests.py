@@ -9,7 +9,16 @@ from django.urls import reverse
 # ==============================================================================
 
 class NoteModelTest(TestCase):
+    """Test class for testing the classes/models in models.py file.
 
+    Parameters:
+    - django.test.TestCase: Parent class this class inherits from.
+    - django.contrib.auth.models.User: Django class for creating User objects,
+      typically attached to a set of 'sticky-notes'.
+    - models.Note: Note class represting a 'sticky-note'.
+    - models.Category: Category class representing a category the 'sticky-notes'
+      are stored as (i.e. hex-value).
+    """
     def setUp(self):
         self.user = User.objects.create(
             username="testuser",
@@ -60,9 +69,17 @@ class NoteModelTest(TestCase):
 # Unit Tests for Views (in views.py)
 # ==============================================================================
 
-
 class ViewTest(TestCase):
+    """Test class for testing the views in views.py file.
 
+    Parameters:
+    - django.test.TestCase: Parent class this class inherits from.
+    - django.contrib.auth.models.User: Django class for creating User objects,
+      typically attached to a set of 'sticky-notes'.
+    - models.Note: Note class represting a 'sticky-note'.
+    - models.Category: Category class representing a category the 'sticky-notes'
+      are stored as (i.e. hex-value).
+    """
     def setUp(self):
         self.user = User.objects.create(
             username="testuser",
@@ -90,10 +107,12 @@ class ViewTest(TestCase):
         self.skipTest("Not implemented")
 
     def test_index_view(self):
+        # Checks the home/index view is reachable.
         response = self.client.get(reverse("index"))
         self.assertEqual(response.status_code, 200)
 
     def test_register_view(self):
+        # Checks the register view to make sure a user account can be created.
         response = self.client.get(reverse("register"))
         self.assertEqual(response.status_code, 200)
 
