@@ -51,7 +51,11 @@ class NoteModelTest(TestCase):
         test_note = Note.objects.get(id=1)
         self.assertIsNotNone(test_note.created_at)
 
-    # TODO -- TEST CATEGORY CLASS
+    def test_category_has_name(self):
+        self.skipTest("Not implemented")
+
+    def test_category_has_hex_value(self):
+        self.skipTest("Not implemented")
 
 # Unit Tests for Views (in views.py)
 # ==============================================================================
@@ -76,6 +80,15 @@ class ViewTest(TestCase):
             category=self.category,
         )
 
+    def test_user_login_view(self):
+        self.skipTest("Not implemented")
+
+    def test_user_logout_view(self):
+        self.skipTest("Not implemented")
+
+    def test_user_delete_view(self):
+        self.skipTest("Not implemented")
+
     def test_index_view(self):
         response = self.client.get(reverse("index"))
         self.assertEqual(response.status_code, 200)
@@ -84,4 +97,26 @@ class ViewTest(TestCase):
         response = self.client.get(reverse("register"))
         self.assertEqual(response.status_code, 200)
 
-    # TODO -- TEST VIEWS IN VIEWS.PY FILE.
+    def test_note_list_view(self):
+        self.skipTest("Not implemented")
+
+    def test_note_detail_view(self):
+        self.skipTest("Not implemented")
+
+    def test_note_create_view(self):
+        self.skipTest("Not implemented")
+
+    def test_note_update_view(self):
+        self.skipTest("Not implemented")
+
+    def test_note_delete_view(self):
+        self.skipTest("Not implemented")
+
+    def test_category_list_view(self):
+        self.skipTest("Not implemented")
+
+    def test_category_create_view(self):
+        self.skipTest("Not implemented")
+
+    def test_category_delete_view(self):
+        self.skipTest("Not implemented")
