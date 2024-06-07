@@ -1,5 +1,3 @@
-# Documentation for 'User' import found at:
-# https://docs.djangoproject.com/en/5.0/topics/auth/customizing/#extending-the-existing-user-model
 from django.contrib.auth.models import User
 from django.db import models
 
