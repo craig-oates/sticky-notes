@@ -257,6 +257,7 @@ def category_delete(request, pk):
     if request.user.is_superuser:
         category = get_object_or_404(Category, pk=pk)
         category.delete()
+        messages.success(request, "Category deleted.")
         return redirect("/categories")
     else:
         if request.user.is_authenticated:
