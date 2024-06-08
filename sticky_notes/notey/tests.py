@@ -1,6 +1,5 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
-from django.test import Client
 from .models import Note, Category
 from datetime import datetime
 from django.urls import reverse
@@ -11,7 +10,8 @@ from django.urls import reverse
 
 
 class ModelTests(TestCase):
-    """Test class for testing the classes/models in models.py file.
+    """
+    Test class for testing the classes/models in models.py file.
 
     Parameters:
     - django.test.TestCase: Parent class this class inherits from.
@@ -69,7 +69,8 @@ class ModelTests(TestCase):
 
 
 class ViewTests(TestCase):
-    """Test class for testing the views in views.py file.
+    """
+    Test class for testing the views in views.py file.
 
     Parameters:
     - django.test.TestCase: Parent class this class inherits from.
@@ -86,6 +87,11 @@ class ViewTests(TestCase):
             email="test@email.com",
             password="thefancytestpassword",
         )
+        self.super_user = User.objects.create_superuser(
+            username="super_user",
+            email="super@email.com",
+            password="superuserpassword",
+        )
         self.category = Category.objects.create(
             name="orange", hex_value="fbae3c"
         )
@@ -96,16 +102,13 @@ class ViewTests(TestCase):
             created_at=datetime.now(),
             category=self.category,
         )
-        self.client = Client()
 
-    def test_user_login_view_with_valid_login(self):
+    def test_user_login_view(self):
         # Checks if user can log in, with valid account details.
         self.client.force_login(self.user)
         response = self.client.post(reverse("login"), follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "dashboard")
-
-    def test_user_login_view_with_invalid_login(self):
         # Checks if user can log in, with invalid account details.
         self.client.login(username="non_user", password="incorrectpassword")
         response = self.client.post(reverse("login"), follow=True)
@@ -124,6 +127,9 @@ class ViewTests(TestCase):
         response = self.client.post(reverse("user_delete"), follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Your account has been deleted.")
+        # Check for non-logged in users.
+        visitor_response = self.client.get(reverse("user_delete"))
+        self.assertEqual(visitor_response.status_code, 302)
 
     def test_index_view(self):
         # Checks the home/index view is reachable.
@@ -135,19 +141,27 @@ class ViewTests(TestCase):
         response = self.client.get(reverse("register"))
         self.assertEqual(response.status_code, 200)
 
-    def test_note_list_view_logged_in(self):
+    def test_note_list_view(self):
         # Checks the note_list/dashboard view, when user is logged in.
         self.client.login(username="testuser", password="thefancytestpassword")
         response = self.client.get(reverse("note_list"), follow=True)
         self.assertEqual(response.status_code, 200)
-
-    def test_note_list_view_not_logged_in(self):
         # Checks the note_list/dashboard view, when user is not logged in.
-        response = self.client.get(reverse("note_list"))
-        self.assertEqual(response.status_code, 302)
+        self.client.logout()
+        visitor_response = self.client.get(reverse("note_list"))
+        self.assertEqual(visitor_response.status_code, 302)
 
     def test_note_detail_view(self):
-        self.skipTest("Not implemented")
+        # Checks to see if a detail view of a note can be viewed.
+        self.client.force_login(self.user)
+        url = reverse("note_detail", kwargs={"pk": 1})
+        response = self.client.get(url, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Created at:")
+        # Check for non-logged in users.
+        self.client.logout()
+        visitor_response = self.client.get(url)
+        self.assertEqual(visitor_response.status_code, 302)
 
     def test_note_create_view(self):
         self.skipTest("Not implemented")
@@ -159,10 +173,83 @@ class ViewTests(TestCase):
         self.skipTest("Not implemented")
 
     def test_category_list_view(self):
-        self.skipTest("Not implemented")
+        # Checks to see if category_list can be viewed.
+        # User must be a super user to view this page.
+        self.client.force_login(self.super_user)
+        response = self.client.get(reverse("category_list"), follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "For a list of Post-It style colour")
+        self.client.logout()
+        # Checks the category list page as a non-super user.
+        self.client.force_login(self.user)
+        not_auth_response = self.client.get(
+            reverse("category_list"), follow=True
+        )
+        self.assertEqual(not_auth_response.status_code, 200)
+        self.assertContains(
+            not_auth_response, "You are not authorised to view that."
+        )
+        self.client.logout()
+        # Check for non-logged in users.
+        visitor_response = self.client.get(reverse("category_list"))
+        self.assertEqual(visitor_response.status_code, 302)
 
     def test_category_create_view(self):
-        self.skipTest("Not implemented")
+        # Checks to see if a category can be created.
+        # User must be a super user to view this page.
+        self.client.force_login(self.super_user)
+        response = self.client.post(
+            reverse("category_create"),
+            data={"name": "White", "hex_value": "000000"},
+            follow=True,
+        )
+        self.assertRedirects(response, reverse("category_list"))
+        self.assertContains(response, "Category created.")
+        self.client.logout()
+        # Checks the category list page as a non-super user.
+        self.client.force_login(self.user)
+        not_auth_response = self.client.get(
+            reverse("category_create"),
+            data={"name": "White", "hex_value": "000000"},
+            follow=True,
+        )
+        self.assertRedirects(not_auth_response, reverse("note_list"))
+        self.assertContains(
+            not_auth_response, "You are not authorised to view that."
+        )
+        self.client.logout()
+        # # Check for non-logged in users.
+        visitor_response = self.client.post(
+            reverse("category_list"),
+            data={"name": "White", "hex_value": "000000"},
+            follow=True,
+        )
+        self.assertRedirects(visitor_response, reverse("login"))
+        self.assertContains(visitor_response, "You are not logged in.")
 
     def test_category_delete_view(self):
-        self.skipTest("Not implemented")
+        # Checks to see if a category can be deleted.
+        # User must be a super user to view this page.
+        self.client.force_login(self.super_user)
+        self.client.post(
+            reverse("category_create"),
+            data={"name": "White", "hex_value": "000000"},
+            follow=True,
+        )
+        url = reverse("category_delete", kwargs={"pk": 1})
+        response = self.client.post(url, follow=True)
+        self.assertRedirects(response, reverse("category_list"))
+        self.assertContains(response, "Category deleted.")
+        self.client.logout()
+        # Checks the category list page as a non-super user.
+        self.client.force_login(self.user)
+        not_auth_response = self.client.get(url, follow=True)
+        self.assertRedirects(not_auth_response, reverse("note_list"))
+        self.assertContains(
+            not_auth_response, "You are not authorised to view that."
+        )
+        self.client.logout()
+        # # Check for non-logged in users.
+        visitor_response = self.client.post(url, follow=True)
+        self.assertRedirects(visitor_response, reverse("login"))
+        self.assertContains(visitor_response, "You are not logged in.")
