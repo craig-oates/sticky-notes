@@ -138,8 +138,18 @@ class ViewTests(TestCase):
 
     def test_register_view(self):
         # Checks the register view to make sure a user account can be created.
+        # Register view can be accessed by visitors (i.e. non-logged in users).
         response = self.client.get(reverse("register"))
         self.assertEqual(response.status_code, 200)
+        # Check for visitors to create an account.
+        post_data = {"username": "test_user",
+                     "first_name": "test",
+                     "last_name": "user",
+                     "email": "test@user.com",
+                     "password1": "testpasswordforuser",
+                     "password2": "testpasswordforuser"}
+        response = self.client.post(reverse("register"), data=post_data)
+        self.assertRedirects(response, reverse("login"))
 
     def test_note_list_view(self):
         # Checks the note_list/dashboard view, when user is logged in.
