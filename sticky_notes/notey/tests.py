@@ -144,11 +144,12 @@ class ViewTests(TestCase):
     def test_note_list_view(self):
         # Checks the note_list/dashboard view, when user is logged in.
         self.client.login(username="testuser", password="thefancytestpassword")
-        response = self.client.get(reverse("note_list"), follow=True)
+        url = reverse("note_list")
+        response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
         # Checks the note_list/dashboard view, when user is not logged in.
         self.client.logout()
-        visitor_response = self.client.get(reverse("note_list"))
+        visitor_response = self.client.get(url)
         self.assertEqual(visitor_response.status_code, 302)
 
     def test_note_detail_view(self):
@@ -173,7 +174,18 @@ class ViewTests(TestCase):
         self.assertEqual(visitor_response.status_code, 302)
 
     def test_note_update_view(self):
-        self.skipTest("Not implemented")
+        # Check to see if user can update/edit a 'sticky-note'.
+        # Check for logged in users.
+        self.client.force_login(self.user)
+        url = reverse("note_update", kwargs={"pk": 1})
+        post_data = {"title": "New Updated Title",
+                     "Content": "New content"}
+        response = self.client.post(url, data=post_data, follow=True)
+        self.assertEqual(response.status_code, 200)
+        # Check for non-logged in users.
+        self.client.logout()
+        visitor_response = self.client.get(url)
+        self.assertEqual(visitor_response.status_code, 302)
 
     def test_note_delete_view(self):
         # Checks to see if a 'sticky-note' for can be accessed by user.
