@@ -142,12 +142,14 @@ class ViewTests(TestCase):
         response = self.client.get(reverse("register"))
         self.assertEqual(response.status_code, 200)
         # Check for visitors to create an account.
-        post_data = {"username": "test_user",
-                     "first_name": "test",
-                     "last_name": "user",
-                     "email": "test@user.com",
-                     "password1": "testpasswordforuser",
-                     "password2": "testpasswordforuser"}
+        post_data = {
+            "username": "test_user",
+            "first_name": "test",
+            "last_name": "user",
+            "email": "test@user.com",
+            "password1": "testpasswordforuser",
+            "password2": "testpasswordforuser",
+        }
         response = self.client.post(reverse("register"), data=post_data)
         self.assertRedirects(response, reverse("login"))
 
@@ -188,8 +190,7 @@ class ViewTests(TestCase):
         # Check for logged in users.
         self.client.force_login(self.user)
         url = reverse("note_update", kwargs={"pk": 1})
-        post_data = {"title": "New Updated Title",
-                     "Content": "New content"}
+        post_data = {"title": "New Updated Title", "Content": "New content"}
         response = self.client.post(url, data=post_data, follow=True)
         self.assertEqual(response.status_code, 200)
         # Check for non-logged in users.
