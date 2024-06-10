@@ -176,7 +176,15 @@ class ViewTests(TestCase):
         self.skipTest("Not implemented")
 
     def test_note_delete_view(self):
-        self.skipTest("Not implemented")
+        # Checks to see if a 'sticky-note' for can be accessed by user.
+        self.client.force_login(self.user)
+        url = reverse("note_delete", kwargs={"pk": 1})
+        response = self.client.get(url, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.client.logout()
+        # Check for visitors not logged into the website, to redirect.
+        visitor_response = self.client.get(url)
+        self.assertEqual(visitor_response.status_code, 302)
 
     def test_category_list_view(self):
         # Checks to see if category_list can be viewed.
