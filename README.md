@@ -26,6 +26,7 @@ Open [localhost:8000](http://localhost:8000) in your browser, can click on ‘Lo
 1. Only the superuser can access the Categories section.
 2. Basic user will only be able to select from a pre-determined list of categories (i.e. colours), set be the superuser.
 3. Whilst stated on the website, use [color-hex.com](https://www.color-hex.com/) for a list various Post-it note styles colour themes.
+4. Use case, class and sequence diagrams can be found in the [/assets](./assets) directory, alongside the screenshots.
 
 # Colour Theme Starter Pack (Category Section)
 
@@ -55,3 +56,5 @@ get started, quickly.
 | Turquoise | 3bd7c2 |
 | Pink      | fd4db0 |
 | Yellow    | e7f152 |
+
+![category section screenshot](./assets/categories-screenshot.png)
