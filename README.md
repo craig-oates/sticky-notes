@@ -2,6 +2,8 @@
 
 This is Task 26 – Django – Sticky Notes Application Part 2
 
+![dashboard screenshot](./assets/dashboard-screenshot.png)
+
 # Set-Up
 
 ```bash
