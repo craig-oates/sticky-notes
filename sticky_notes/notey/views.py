@@ -13,6 +13,7 @@ def index(request):
 
     :return: Rendered template of the home/index page.
     """
+    
     return render(request, "notey/index.html")
 
 
@@ -23,6 +24,7 @@ def register(request):
     :param request: HTTP request object.
     :return: Rendered template of the register/signup page.
     """
+    
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
         if form.is_valid():
@@ -42,6 +44,7 @@ def user_login(request):
     :param request: HTTP request object.
     :return: Rendered template of the login page.
     """
+    
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -67,6 +70,7 @@ def user_logout(request):
     :param request: HTTP request object.
     :return: Rendered template of the login page.
     """
+    
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return render(request, "notey/logout.html")
@@ -79,6 +83,7 @@ def user_delete(request):
     :param request: HTTP request object.
     :return: Rendered template of account deleted page.
     """
+    
     if request.user.is_authenticated:
         request.user.delete()
         # This clears the session cache for the user, help reduce weirdness in
@@ -97,6 +102,7 @@ def note_list(request):
     :param request: HTTP reqeust object.
     :return: Rendered template, contains a list of 'sticky-notes'.
     """
+    
     if request.user.is_authenticated:
         notes = Note.objects.filter(user_id=request.user.id)
         context = {
@@ -118,6 +124,7 @@ def note_detail(request, pk):
     :param pk: Primary key of the Note (sticky-note).
     :return: Rendered template, containing the details of the 'sticky-note'.
     """
+    
     if request.user.is_authenticated:
         context = {
             "note": get_object_or_404(Note, pk=pk),
@@ -136,6 +143,7 @@ def note_create(request):
     :param request: HTTP request object.
     :return: Rendered template for creating a 'sticky-note'.
     """
+    
     if request.user.is_authenticated:
         if request.method == "POST":
             form = NoteForm(request.POST)
@@ -161,6 +169,7 @@ def note_update(request, pk):
     updated.
     :return: Rendered template for updated the specified 'sticky-note'.
     """
+
     if request.user.is_authenticated:
         note = get_object_or_404(Note, pk=pk)
         form = NoteForm(request.POST, instance=note)
@@ -189,6 +198,7 @@ def note_delete(request, pk):
     :param pk: Primary key of the 'sticky-note' to be deleted.
     :return: Redirect to the notes list after deletion.
     """
+
     if request.user.is_authenticated:
         note = get_object_or_404(Note, pk=pk)
         note.delete()
@@ -205,6 +215,7 @@ def category_list(request):
     :param request: HTTP reqeust object.
     :return: Rendered template, contains a list of categories.
     """
+
     if request.user.is_superuser:
         categories = Category.objects.all()
         context = {
@@ -229,6 +240,7 @@ def category_create(request):
     :param request: HTTP request object.
     :return: Redirect to the category list after category creation.
     """
+
     if request.user.is_authenticated:
         if request.method == "POST":
             form = CategoryForm(request.POST)
@@ -254,6 +266,7 @@ def category_delete(request, pk):
     :param pk: Primary key of the category to be deleted.
     :return: Redirect to the category list after deletion.
     """
+
     if request.user.is_superuser:
         category = get_object_or_404(Category, pk=pk)
         category.delete()
